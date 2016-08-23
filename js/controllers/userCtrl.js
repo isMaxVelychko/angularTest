@@ -3,15 +3,9 @@
 
     angular
         .module('myApp')
-        .controller('userCtrl', ['$scope', 'resolvedUser', userCtrl]);
+        .controller('userCtrl', ['$scope', 'user', userCtrl]);
 
-    function userCtrl($scope, resolvedUser) {
-      var self = this;
-      this.userId = null;
-      this.user = resolvedUser;
-
-      $scope.$on('updateUserData', function(event, data) {
-        self.user = angular.extend(data);
-      });
+    function userCtrl($scope, user) {
+        $scope.user = user;
     }
 })();

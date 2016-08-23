@@ -2,27 +2,27 @@
     'use strict';
 
     angular
-      .module('myApp', ['ui.router', 'LocalStorageModule'])
+      .module('myApp', ['ui.router'])
       .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
           .state('users', {
             url: '/users/',
-            templateUrl: 'templates/routeTemplates/list-users-template.html',
-            controller: 'listUsersCtrl as listUsers',
+            templateUrl: 'templates/listUsersTemplate.html',
+            controller: 'listUsersCtrl',
             resolve: {
-              resolvedUsers: function(apiStorage) {
-                return apiStorage.getUsersData();
-              }
+                users: function(userService) {
+                  return userService.loadUsers();
+                },
             }
           })
-          .state('userId', {
+          .state('detail', {
             url: '/users/:userId',
-            templateUrl: 'templates/routeTemplates/user-template.html',
-            controller: 'userCtrl as listUser',
+            templateUrl: 'templates/userTemplate.html',
+            controller: 'userCtrl',
             resolve: {
-              resolvedUser: function(apiStorage, $stateParams) {
-                return apiStorage.getUsersData($stateParams.userId);
-              }
+                user: function(userService, $stateParams) {
+                    return userService.loadUsers($stateParams.userId);
+                }
             }
           });
 

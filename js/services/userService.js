@@ -3,27 +3,29 @@
 
     angular
         .module('myApp')
-        .factory('apiService', ['$rootScope', '$http', apiService]);
+        .factory('userService', ['$rootScope', '$http', userService]);
 
-    function apiService($rootScope, $http) {
+    function userService($rootScope, $http) {
         var root = 'http://jsonplaceholder.typicode.com';
 
         return {
             loadUsers: loadUsers,
-            saveUser: saveUser,
             deleteUser: deleteUser,
         };
 
 
-        function loadUsers() {
-            return $http.get(root + '/users/');
-        }
+        function loadUsers(userId) {
+            var generatedUrl;
 
-        function saveUser(data) {
-          $http.put(root + '/users/' + data.id, data)
-            .then(function(data) {
-              $rootScope.$broadcast('updateUserData', data.data);
-            })
+            if(userId) {
+                generatedUrl = root + '/users/' + userId;
+            } else {
+                generatedUrl = root + '/users/';
+            }
+
+            return $http.get(generatedUrl).then(function (response) {
+                return response.data;
+            });
         }
 
         function deleteUser(userId) {
