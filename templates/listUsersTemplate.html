@@ -1,0 +1,6 @@
+<div class="container cont-custom-position">
+    <div class="user-block" ng-repeat="user in users">
+        <a ng-href="#/users/{{user.id}}" target="_self">{{user.name}}</a>
+        <button type="button" class="btn btn-danger btn-xs delete-btn-position" ng-click="deleteUser(user)">delete</button>
+    </div></br>
+</div>
